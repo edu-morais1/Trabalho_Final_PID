@@ -1,14 +1,3 @@
-"""
-Algoritmos de Segmentação: Otsu e Watershed
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-
-Referências:
-- Otsu, N. (1979). A threshold selection method from gray-level histograms
-- Aula 13 - Segmentação de Imagens (Prof. Matheus Raffael Simon)
-"""
-
 import numpy as np
 import sys
 import os
@@ -31,7 +20,6 @@ class Otsu:
     - m_b: média do background
     - m_f: média do foreground
     
-    Referência: Slides 63-64, Aula 13
     """
     
     def calcular_threshold(self, imagem):
@@ -120,8 +108,6 @@ def contar_objetos(imagem_binaria):
         
     Returns:
         tuple: (num_objetos, imagem_rotulada)
-        
-    Referência: Componentes Conexos - Fundamentos
     """
     # Normalizar para 0 e 1
     imagem_bin = (imagem_binaria > 0).astype(int)
@@ -174,7 +160,6 @@ class Watershed:
     
     Implementação simplificada usando marcadores
     
-    Referência: Slides 85-97, Aula 13
     """
     
     def __init__(self, suavizacao=True, sigma=1.0):

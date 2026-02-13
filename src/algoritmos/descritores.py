@@ -1,14 +1,3 @@
-"""
-Descritores de Fronteira: Cadeia de Freeman
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-
-Referências:
-- Freeman, H. (1961). On the encoding of arbitrary geometric configurations
-- Aula 14 - Representação e Descrição (Prof. Matheus Raffael Simon)
-"""
-
 import numpy as np
 import sys
 import os
@@ -16,36 +5,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 class CadeiaFreeman:
-    """
-    Código da Cadeia de Freeman (8 direções)
-    
-    Representa fronteira como sequência de segmentos direcionais
-    
-    Direções (8-conectividade):
-        3  2  1
-        4  *  0
-        5  6  7
-        
-    Onde:
-    0 = Leste (→)      4 = Oeste (←)
-    1 = Nordeste (↗)   5 = Sudoeste (↙)
-    2 = Norte (↑)      6 = Sul (↓)
-    3 = Noroeste (↖)   7 = Sudeste (↘)
-    
-    Primeira Diferença:
-    - Torna o código invariante à rotação
-    - Conta mudanças de direção entre segmentos adjacentes
-    
-    Referência: Slides 6-10, Aula 14
-    """
-    
+   
     def __init__(self, conectividade=8):
-        """
-        Inicializa o extrator de Cadeia de Freeman
-        
-        Args:
-            conectividade (int): 4 ou 8 conectividade
-        """
         self.conectividade = conectividade
         
         # Direções para 8-conectividade
@@ -62,19 +23,6 @@ class CadeiaFreeman:
         }
         
     def encontrar_ponto_inicial(self, imagem_binaria):
-        """
-        Encontra o ponto inicial do contorno
-        
-        Ponto inicial: pixel mais alto e mais à esquerda
-        
-        Args:
-            imagem_binaria (numpy.ndarray): Imagem binária (0 ou 255)
-            
-        Returns:
-            tuple: (linha, coluna) do ponto inicial, ou None se não encontrar
-            
-        Referência: Slide 4, Aula 14
-        """
         # Normalizar para 0 e 1
         img_bin = (imagem_binaria > 0).astype(int)
         
@@ -88,15 +36,6 @@ class CadeiaFreeman:
         return None
     
     def obter_vizinhos_8(self, ponto):
-        """
-        Retorna os 8 vizinhos de um ponto em ordem horária
-        
-        Args:
-            ponto (tuple): (linha, coluna)
-            
-        Returns:
-            list: Lista de tuplas (linha, coluna) dos vizinhos
-        """
         i, j = ponto
         vizinhos = []
         
@@ -107,24 +46,6 @@ class CadeiaFreeman:
         return vizinhos
     
     def seguir_contorno(self, imagem_binaria, ponto_inicial):
-        """
-        Segue o contorno a partir do ponto inicial
-        
-        Algoritmo do Seguidor de Fronteira:
-        1. b0 = ponto inicial, c0 = vizinho oeste
-        2. Examinar vizinhança-8 em sentido horário a partir de c0
-        3. b1 = primeiro vizinho 1 encontrado
-        4. Repetir até retornar a b0
-        
-        Args:
-            imagem_binaria (numpy.ndarray): Imagem binária
-            ponto_inicial (tuple): (linha, coluna) do ponto inicial
-            
-        Returns:
-            list: Lista de pontos do contorno [(i0,j0), (i1,j1), ...]
-            
-        Referência: Slides 4-5, Aula 14
-        """
         # Normalizar para 0 e 1
         img_bin = (imagem_binaria > 0).astype(int)
         altura, largura = img_bin.shape
@@ -192,17 +113,6 @@ class CadeiaFreeman:
         return contorno
     
     def gerar_codigo(self, contorno):
-        """
-        Gera o código da cadeia de Freeman a partir do contorno
-        
-        Args:
-            contorno (list): Lista de pontos [(i0,j0), (i1,j1), ...]
-            
-        Returns:
-            list: Código da cadeia (lista de direções 0-7)
-            
-        Referência: Slide 7, Aula 14
-        """
         if len(contorno) < 2:
             return []
         
@@ -225,19 +135,6 @@ class CadeiaFreeman:
         return codigo
     
     def normalizar_codigo(self, codigo):
-        """
-        Normaliza o código para obter o menor número inteiro
-        
-        Torna o código invariante ao ponto de partida
-        
-        Args:
-            codigo (list): Código da cadeia
-            
-        Returns:
-            list: Código normalizado
-            
-        Referência: Slide 7, Aula 14
-        """
         if not codigo:
             return codigo
         
@@ -253,22 +150,6 @@ class CadeiaFreeman:
         return [int(d) for d in menor]
     
     def primeira_diferenca(self, codigo):
-        """
-        Calcula a primeira diferença do código
-        
-        Torna o código invariante à rotação
-        
-        Primeira diferença = número de mudanças de direção (sentido horário)
-        entre segmentos adjacentes
-        
-        Args:
-            codigo (list): Código da cadeia
-            
-        Returns:
-            list: Primeira diferença
-            
-        Referência: Slide 9, Aula 14
-        """
         if len(codigo) < 2:
             return []
         
@@ -285,19 +166,6 @@ class CadeiaFreeman:
         return primeira_dif
     
     def aplicar(self, imagem_binaria):
-        """
-        Aplica extração completa da Cadeia de Freeman (Questão 4)
-        
-        Args:
-            imagem_binaria (numpy.ndarray): Imagem binária
-            
-        Returns:
-            dict: Dicionário com resultados
-                - 'contorno': lista de pontos
-                - 'codigo': código da cadeia
-                - 'codigo_normalizado': código normalizado
-                - 'primeira_diferenca': primeira diferença
-        """
         print("\n" + "="*60)
         print("CADEIA DE FREEMAN")
         print("="*60)
@@ -338,16 +206,7 @@ class CadeiaFreeman:
         }
     
     def visualizar_contorno(self, imagem, contorno):
-        """
-        Cria imagem com contorno destacado
-        
-        Args:
-            imagem (numpy.ndarray): Imagem original
-            contorno (list): Lista de pontos do contorno
-            
-        Returns:
-            numpy.ndarray: Imagem com contorno em branco
-        """
+
         resultado = imagem.copy()
         
         for ponto in contorno:

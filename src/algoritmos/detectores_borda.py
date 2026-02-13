@@ -1,15 +1,3 @@
-"""
-Detectores de Borda: Marr-Hildreth e Canny
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-
-Referências:
-- Marr, D., Hildreth, E. (1980). Theory of Edge Detection
-- Canny, J. (1986). A Computational Approach to Edge Detection
-- Aula 13 - Segmentação de Imagens (Prof. Matheus Raffael Simon)
-"""
-
 import numpy as np
 import sys
 import os
@@ -23,23 +11,6 @@ from utils.processamento import (
 
 
 class MarrHildreth:
-    """
-    Detector de bordas de Marr-Hildreth (1980)
-    
-    Teoria:
-    - Utiliza o Laplaciano da Gaussiana (LoG)
-    - Detecta bordas através de cruzamentos por zero
-    - Formula LoG: ∇²G(x,y) = [(x²+y²-2σ⁴)/σ⁴] * e^(-(x²+y²)/(2σ²))
-    - Tamanho da máscara: n = menor ímpar > 6σ
-    
-    Passos:
-    1. Filtrar com Gaussiano passa-baixa
-    2. Calcular Laplaciano
-    3. Encontrar cruzamentos por zero
-    4. Aplicar threshold
-    
-    Referência: Slides 26-32, Aula 13
-    """
     
     def __init__(self, sigma=1.5, threshold=0.04):
         """
@@ -99,8 +70,6 @@ class MarrHildreth:
             
         Returns:
             numpy.ndarray: Imagem binária com bordas
-            
-        Referência: Slide 31, Aula 13
         """
         altura, largura = imagem_log.shape
         bordas = np.zeros((altura, largura), dtype=np.uint8)
@@ -187,8 +156,6 @@ class Canny:
     2. Cálculo do gradiente (magnitude e direção)
     3. Supressão não-máxima
     4. Dupla limiarização com histerese
-    
-    Referência: Slides 33-38, Aula 13
     """
     
     def __init__(self, sigma=1.4, threshold_low=0.04, threshold_high=0.10):
@@ -199,8 +166,6 @@ class Canny:
             sigma (float): Desvio padrão do filtro Gaussiano
             threshold_low (float): Limiar baixo (% do máximo)
             threshold_high (float): Limiar alto (% do máximo)
-            
-        Nota: Razão recomendada TH:TL = 2:1 ou 3:1
         """
         self.sigma = sigma
         self.threshold_low = threshold_low
@@ -226,7 +191,6 @@ class Canny:
         Returns:
             numpy.ndarray: Magnitude após supressão não-máxima
             
-        Referência: Slides 35-36, Aula 13
         """
         altura, largura = magnitude.shape
         resultado = np.zeros((altura, largura))
@@ -283,8 +247,6 @@ class Canny:
             
         Returns:
             numpy.ndarray: Imagem binária com bordas finais
-            
-        Referência: Slides 37-38, Aula 13
         """
         altura, largura = magnitude_suprimida.shape
         

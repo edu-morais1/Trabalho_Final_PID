@@ -1,25 +1,9 @@
-"""
-Funções para visualização de imagens
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-"""
-
 import numpy as np
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 
 
 def array_para_photoimage(imagem_array):
-    """
-    Converte numpy array para PhotoImage (Tkinter)
-    
-    Args:
-        imagem_array (numpy.ndarray): Imagem em array
-        
-    Returns:
-        ImageTk.PhotoImage: Imagem para Tkinter
-    """
     # Normalizar se necessário
     if imagem_array.max() > 255 or imagem_array.min() < 0:
         imagem_array = np.clip(imagem_array, 0, 255)
@@ -34,17 +18,6 @@ def array_para_photoimage(imagem_array):
 
 
 def redimensionar_imagem(imagem, max_largura=400, max_altura=400):
-    """
-    Redimensiona imagem mantendo proporção
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        max_largura (int): Largura máxima
-        max_altura (int): Altura máxima
-        
-    Returns:
-        numpy.ndarray: Imagem redimensionada
-    """
     altura, largura = imagem.shape
     
     # Calcular proporção
@@ -64,13 +37,6 @@ def redimensionar_imagem(imagem, max_largura=400, max_altura=400):
 
 
 def plotar_histograma(imagem, titulo="Histograma"):
-    """
-    Plota histograma da imagem usando matplotlib
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        titulo (str): Título do gráfico
-    """
     plt.figure(figsize=(10, 4))
     plt.hist(imagem.ravel(), bins=256, range=(0, 256), color='gray')
     plt.title(titulo)
@@ -81,15 +47,6 @@ def plotar_histograma(imagem, titulo="Histograma"):
 
 
 def plotar_comparacao(img1, img2, titulo1="Original", titulo2="Processada"):
-    """
-    Plota duas imagens lado a lado para comparação
-    
-    Args:
-        img1 (numpy.ndarray): Primeira imagem
-        img2 (numpy.ndarray): Segunda imagem
-        titulo1 (str): Título da primeira imagem
-        titulo2 (str): Título da segunda imagem
-    """
     fig, axes = plt.subplots(1, 2, figsize=(12, 6))
     
     axes[0].imshow(img1, cmap='gray')

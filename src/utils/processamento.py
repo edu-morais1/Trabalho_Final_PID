@@ -3,15 +3,6 @@ from PIL import Image
 
 
 def carregar_imagem(caminho):
-    """
-    Carrega uma imagem e converte para escala de cinza
-    
-    Args:
-        caminho (str): Caminho da imagem
-        
-    Returns:
-        numpy.ndarray: Imagem em escala de cinza (valores 0-255)
-    """
     img = Image.open(caminho)
     
     # Converter para escala de cinza se necessário
@@ -22,13 +13,6 @@ def carregar_imagem(caminho):
 
 
 def salvar_imagem(imagem, caminho):
-    """
-    Salva uma imagem
-    
-    Args:
-        imagem (numpy.ndarray): Imagem a ser salva
-        caminho (str): Caminho de destino
-    """
     # Normalizar para 0-255 se necessário
     if imagem.max() <= 1.0:
         imagem = imagem * 255
@@ -39,15 +23,6 @@ def salvar_imagem(imagem, caminho):
 
 
 def normalizar_imagem(imagem):
-    """
-    Normaliza imagem para range 0-255
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        
-    Returns:
-        numpy.ndarray: Imagem normalizada
-    """
     img_min = imagem.min()
     img_max = imagem.max()
     
@@ -58,35 +33,10 @@ def normalizar_imagem(imagem):
 
 
 def adicionar_padding(imagem, pad_size, valor=0):
-    """
-    Adiciona padding ao redor da imagem
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        pad_size (int): Tamanho do padding
-        valor (float): Valor do padding (padrão: 0)
-        
-    Returns:
-        numpy.ndarray: Imagem com padding
-    """
     return np.pad(imagem, pad_size, mode='constant', constant_values=valor)
 
 
 def criar_mascara_gaussiana(tamanho, sigma):
-    """
-    Cria uma máscara gaussiana
-    
-    Fórmula: G(x,y) = (1/(2πσ²)) * e^(-(x²+y²)/(2σ²))
-    
-    Args:
-        tamanho (int): Tamanho da máscara (deve ser ímpar)
-        sigma (float): Desvio padrão
-        
-    Returns:
-        numpy.ndarray: Máscara gaussiana normalizada
-        
-    Referência: Aula 11 - Filtragem Espacial
-    """
     # Garantir que o tamanho seja ímpar
     if tamanho % 2 == 0:
         tamanho += 1
@@ -106,18 +56,6 @@ def criar_mascara_gaussiana(tamanho, sigma):
 
 
 def calcular_gradiente(imagem, metodo='sobel'):
-    """
-    Calcula o gradiente da imagem usando diferentes métodos
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        metodo (str): 'sobel', 'prewitt' ou 'roberts'
-        
-    Returns:
-        tuple: (magnitude, direcao)
-        
-    Referência: Aula 13 - Segmentação de Imagens
-    """
     if metodo == 'sobel':
         # Máscaras de Sobel
         gx_mask = np.array([[-1, 0, 1],
@@ -155,20 +93,6 @@ def calcular_gradiente(imagem, metodo='sobel'):
 
 
 def convolucao(imagem, mascara):
-    """
-    Aplica convolução entre imagem e máscara
-    
-    Implementação manual conforme solicitado no trabalho
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        mascara (numpy.ndarray): Máscara de convolução
-        
-    Returns:
-        numpy.ndarray: Imagem convoluída
-        
-    Referência: Aula 11 - Filtragem Espacial
-    """
     altura_img, largura_img = imagem.shape
     altura_mask, largura_mask = mascara.shape
     
@@ -194,16 +118,6 @@ def convolucao(imagem, mascara):
 
 
 def correlacao(imagem, mascara):
-    """
-    Aplica correlação entre imagem e máscara
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        mascara (numpy.ndarray): Máscara
-        
-    Returns:
-        numpy.ndarray: Imagem correlacionada
-    """
     altura_img, largura_img = imagem.shape
     altura_mask, largura_mask = mascara.shape
     
@@ -222,15 +136,6 @@ def correlacao(imagem, mascara):
 
 
 def criar_histograma(imagem):
-    """
-    Cria histograma da imagem
-    
-    Args:
-        imagem (numpy.ndarray): Imagem de entrada
-        
-    Returns:
-        numpy.ndarray: Histograma (256 bins)
-    """
     histograma = np.zeros(256, dtype=int)
     
     imagem_int = imagem.astype(int)

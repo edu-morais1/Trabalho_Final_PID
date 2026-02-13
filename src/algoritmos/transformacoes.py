@@ -1,14 +1,3 @@
-"""
-Transformações de Imagem: Segmentação Customizada
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-
-Referências:
-- Aula 13 - Segmentação de Imagens
-- Trabalho Final - Questão 6
-"""
-
 import numpy as np
 
 

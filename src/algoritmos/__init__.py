@@ -1,7 +1,3 @@
-"""
-Módulo de algoritmos de processamento de imagens
-"""
-
 from .detectores_borda import MarrHildreth, Canny, comparar_detectores
 from .segmentacao import Otsu, Watershed, contar_objetos
 from .descritores import CadeiaFreeman

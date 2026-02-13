@@ -1,13 +1,3 @@
-"""
-Filtros de Suavização: Filtro Box
-
-Autor: [Seu Nome]
-Data: Janeiro/2026
-
-Referências:
-- Aula 11 - Filtragem Espacial (Prof. Matheus Raffael Simon)
-"""
-
 import numpy as np
 import sys
 import os
@@ -25,13 +15,7 @@ class FiltroBox:
     - Maior a máscara, maior o efeito
     
     Máscara nxn: todos os elementos = 1/(n²)
-    
-    Exemplo 3x3:
-    [1/9  1/9  1/9]
-    [1/9  1/9  1/9]
-    [1/9  1/9  1/9]
-    
-    Referência: Slides 7-12, Aula 11
+   
     """
     
     def criar_mascara(self, tamanho):
@@ -64,9 +48,6 @@ class FiltroBox:
             
         Returns:
             numpy.ndarray: Imagem filtrada
-            
-        Nota: Para imagens grandes, considere usar tamanhos maiores
-        como 11x11, 21x21, 31x31, etc.
         """
         print(f"Aplicando Filtro Box {tamanho}x{tamanho}...")
         
@@ -108,10 +89,7 @@ class FiltroBox:
         Returns:
             numpy.ndarray: Imagem filtrada
             
-        Observação:
-        Para imagens muito grandes (>1024x1024), recomenda-se usar
-        máscaras maiores (11x11, 21x21, 31x31) para obter efeito visível
-        """
+       """
         # Verificar tamanho da imagem
         altura, largura = imagem.shape
         tamanho_img = max(altura, largura)
